@@ -1,5 +1,8 @@
 # e-commerce-customer-client
 
+Demo https://storepedia-akbarhabiby.web.app/
+> Deployed on Nov 18 2020
+
 ## Project setup
 ```
 npm install
