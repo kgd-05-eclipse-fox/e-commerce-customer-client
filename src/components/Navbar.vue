@@ -10,7 +10,7 @@
             <a class="nav-link" href="#" id="btn-list">My Cart</a>
         </li>
         </ul>
-        <form class="form-inline my-lg-0">
+        <form class="form-inline my-lg-0" @submit.prevent="signOut">
         <button class="btn btn-danger" type="submit">Sign Out</button>
         </form>
       </div>
@@ -20,7 +20,15 @@
 
 <script>
 export default {
-  name: 'Navbar'
+  name: 'Navbar',
+  methods: {
+    signOut () {
+      localStorage.clear()
+      this.$router.push({
+        name: 'Home'
+      })
+    }
+  }
 }
 </script>
 

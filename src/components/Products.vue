@@ -2,7 +2,7 @@
     <div class="container d-flex flex-wrap">
       <div class="col-3 mx-4" v-for="product in products" :key="product.id">
         <div class="card">
-          <img class="card-img-top" style="height: 250px;" :src="product.image_url" alt="product.image">
+          <img class="card-img-top" :src="product.image_url" alt="product.image">
           <div class="card-body">
             <h5 class="card-title">{{product.name}}</h5>
             <p>Rp. {{product.price}}</p>
@@ -27,7 +27,7 @@ export default {
       const token = localStorage.getItem('access_token')
       if (!token) {
         this.$router.push({
-          name: 'login'
+          name: 'Login'
         })
       } else {
         this.$store.dispatch('addToCart')
