@@ -7,7 +7,7 @@
             <a class="nav-link" href="#" id="btn-home">Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#" id="btn-list">My Cart</a>
+            <a class="nav-link" href="#" id="btn-list" @click.prevent="toCartPage">My Cart</a>
         </li>
         </ul>
         <form class="form-inline my-lg-0" @submit.prevent="signOut">
@@ -26,6 +26,11 @@ export default {
       localStorage.clear()
       this.$router.push({
         name: 'Home'
+      })
+    },
+    toCartPage () {
+      this.$router.push({
+        name: 'Cart'
       })
     }
   }

@@ -30,7 +30,7 @@ export default {
           name: 'Login'
         })
       } else {
-        this.$store.dispatch('addToCart')
+        this.$store.dispatch('addToCart', productId)
       }
     }
   },
