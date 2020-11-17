@@ -37,6 +37,15 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.carousel .carousel-item {
+  height: 500px;
+}
 
+.carousel-item img {
+  position: absolute;
+  object-fit: contain;
+  top: 0;
+  left: 0;
+}
 </style>

@@ -2,8 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from '../config/axios'
 
-const token = localStorage.getItem('access_token')
-
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -11,7 +9,8 @@ export default new Vuex.Store({
     loggedIn: false,
     banners: [],
     products: [],
-    carts: []
+    carts: [],
+    history: []
   },
   mutations: {
     setLoggedIn (state, data) {
@@ -67,6 +66,7 @@ export default new Vuex.Store({
         })
     },
     getCart (context) {
+      const token = localStorage.getItem('access_token')
       axios({
         method: 'GET',
         url: '/carts',
@@ -82,7 +82,8 @@ export default new Vuex.Store({
         })
     },
     addToCart (context, id) {
-      axios({
+      const token = localStorage.getItem('access_token')
+      return axios({
         method: 'POST',
         url: '/carts',
         headers: {
@@ -93,12 +94,29 @@ export default new Vuex.Store({
           quantity: 1
         }
       })
-        .then(({ data }) => {
-          context.dispatch('getCart')
-        })
-        .catch(err => {
-          console.log(err)
-        })
+    },
+    updateCart (context, payload) {
+      const token = localStorage.getItem('access_token')
+      return axios({
+        method: 'POST',
+        url: '/carts',
+        headers: {
+          access_token: token
+        },
+        data: payload
+      })
+    },
+    deleteCart (context, id) {
+      const token = localStorage.getItem('access_token')
+      return axios({
+        method: 'DELETE',
+        url: `/carts/${id}`,
+        headers: {
+          access_token: token
+        }
+      })
+    },
+    checkout (context) {
     }
   },
   modules: {

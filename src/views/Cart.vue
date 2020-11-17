@@ -8,7 +8,7 @@
     </div>
     <div class="row mt-5" v-else-if="carts[0]">
       <div class="col-6">
-        <div class="row" style="margin-left: 20em">
+        <div class="row">
           <CartItem
             v-for="item in carts"
             :key="item.id"
@@ -17,10 +17,11 @@
         </div>
       </div>
       <div class=" col-6">
-        <div class="card" style="width:300px; margin-left: 10em">
+        <div class="card" style="width:300px;">
           <div class="card-body">
             <h5 class="card-subtitle text-muted">Total</h5>
             <h3 class="card-title">{{ totalPrice }}</h3>
+            <button @click="checkout" class="btn btn-primary">Checkout</button>
           </div>
         </div>
       </div>
@@ -33,16 +34,28 @@ import CartItem from '../components/Cart_Item'
 
 export default {
   name: 'CartPage',
+  methods: {
+    checkout () {
+      this.$store.dispatch('checkout')
+    }
+  },
   computed: {
     carts () {
       return this.$store.state.carts
     },
     totalPrice () {
-      return 'some number for now'
+      let total = 0
+      this.carts.forEach(item => {
+        total += item.Product.price * item.quantity
+      })
+      return new Intl.NumberFormat('id', { style: 'currency', currency: 'IDR' }).format(total)
     }
   },
   components: {
     CartItem
+  },
+  created () {
+    this.$store.dispatch('getCart')
   }
 }
 </script>

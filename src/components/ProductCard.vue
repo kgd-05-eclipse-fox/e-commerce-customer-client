@@ -6,11 +6,13 @@
         <h5 class="card-title text-right"><strong>{{ product.name }}</strong></h5>
         <hr>
         <h6 class="card-subtitle text-left">{{ toCurrency }}</h6>
-        <p class="card-text text-left">In Stock ({{ product.stock }} items)</p>
+        <p v-if="!hideAddToCart" class="card-text text-left">In Stock ({{ product.stock }} items)</p>
+        <p v-else-if="hideAddToCart" class="card-text text-left text-danger">Not available</p>
         <button
           @click="addToCart(product.id)"
           class="btn btn-sm btn-block btn-primary"
-          :class="hideAddToCart"
+          :disabled="hideAddToCart"
+          :class="hideAddToCart ? 'diminished' : ''"
         >
         <i class="fas fa-cart-arrow-down"></i> Add To Cart
         </button>
@@ -20,6 +22,8 @@
 </template>
 
 <script>
+import { Toast } from '../config/swal'
+
 export default {
   name: 'ProductCard',
   props: ['product'],
@@ -27,6 +31,16 @@ export default {
     addToCart (id) {
       if (this.loggedIn) {
         this.$store.dispatch('addToCart', id)
+          .then(({ data }) => {
+            Toast.fire({
+              icon: 'success',
+              title: 'Item added to cart'
+            })
+            this.$store.dispatch('getCart')
+          })
+          .catch(err => {
+            console.log(err)
+          })
       } else {
         this.$router.push({ name: 'Login' })
       }
@@ -41,9 +55,9 @@ export default {
     },
     hideAddToCart () {
       if (this.product.stock === 0) {
-        return 'd-none'
+        return true
       } else {
-        return ''
+        return false
       }
     }
   }
@@ -51,5 +65,7 @@ export default {
 </script>
 
 <style>
-
+.diminished {
+  opacity: 0.6;
+}
 </style>

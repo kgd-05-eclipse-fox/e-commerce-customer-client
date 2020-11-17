@@ -5,9 +5,20 @@
     </div>
     <div>
       <div v-if="loggedIn">
-        <router-link to="/carts" class="navbar-brand mr-4"><i class="fas fa-shopping-cart nav-pic"></i></router-link>
-        <router-link to="/history" class="navbar-brand ml-3"><i class="fas fa-history nav-pic"></i></router-link>
-        <button @click="logout" class="btn btn-no-ouline text-primary" data-toggle="button" aria-pressed="false"> Logout <i class="fas fa-sign-out-alt"></i></button>
+        <router-link to="/carts" class="navbar-brand mr-4" :class="diminished">
+          <i class="fas fa-shopping-cart nav-pic"><span :class="items === 0 ? 'd-none' : 'not-dim'"> {{items}}</span></i>
+        </router-link>
+        <router-link to="/history" class="navbar-brand ml-3">
+          <i class="fas fa-history nav-pic"></i>
+        </router-link>
+        <button
+          @click="logout"
+          class="btn btn-no-ouline blue-text"
+          data-toggle="button"
+          aria-pressed="false"
+        >
+          Logout <i class="fas fa-sign-out-alt"></i>
+        </button>
       </div>
       <div v-if="!loggedIn">
         <button @click="toLogin" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Login</button>
@@ -46,6 +57,16 @@ export default {
   computed: {
     loggedIn () {
       return this.$store.state.loggedIn
+    },
+    items () {
+      return this.$store.state.carts.length
+    },
+    diminished () {
+      if (this.items === 0) {
+        return ''
+      } else {
+        return 'not-dim'
+      }
     }
   }
 }
@@ -57,6 +78,10 @@ export default {
   opacity: 0.7;
 }
 .blue-text {
-  color: #0058E6;
+  color: #0049FF;
+}
+.not-dim {
+  color: #0049FF;
+  opacity: 1;
 }
 </style>

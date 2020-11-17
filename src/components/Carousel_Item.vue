@@ -1,6 +1,6 @@
 <template>
   <div class="carousel-item active">
-    <img :src="banner.image_url" class="d-block w-100" alt="...">
+    <img :src="banner.image_url" class="d-block w-100" height="500px" alt="...">
   </div>
 </template>
 
@@ -12,5 +12,10 @@ export default {
 </script>
 
 <style>
-
+.carousel .carousel-item {
+  height: 500px;
+}
+img {
+  object-fit: fill;
+}
 </style>
