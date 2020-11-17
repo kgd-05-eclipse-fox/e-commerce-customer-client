@@ -4,7 +4,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-            <a class="nav-link" href="#" id="btn-home">Home</a>
+            <a class="nav-link" href="#" id="btn-home" @click.prevent="toHomePage">Home</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#" id="btn-list" @click.prevent="toCartPage">My Cart</a>
@@ -31,6 +31,11 @@ export default {
     toCartPage () {
       this.$router.push({
         name: 'Cart'
+      })
+    },
+    toHomePage () {
+      this.$router.push({
+        name: 'Home'
       })
     }
   }

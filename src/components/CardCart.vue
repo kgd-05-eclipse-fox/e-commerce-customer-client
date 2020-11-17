@@ -2,11 +2,17 @@
   <div>
     <h2>This is your cart</h2>
     <div class="container d-flex flex-column">
-      <div class="card d-flex flex-row" v-for="product in productsInCart" :key="product.id">
+      <div class="card d-flex flex-row my-3" v-for="product in productsInCart" :key="product.id">
         <div class="col-4">
-          <img src="../assets/logo.png" alt="product-img">
+          <img :src="product.Product.image_url" style="height: 150px;" alt="product-img">
         </div>
-        <div class="col-8">
+        <div class="col-8 d-flex flex-column">
+          <p>{{product.Product.name}}</p>
+          <p>Rp. {{product.Product.price}}</p>
+          <p>{{product.Qty}}</p>
+          <button type="submit" class="btn btn-primary btn-sm mb-2">+</button>
+          <button type="submit" class="btn btn-primary btn-sm mb-2">-</button>
+          <button type="submit" class="btn btn-danger btn-sm" @click="removeFromCart(product.ProductId)">Remove Item</button>
         </div>
       </div>
     </div>
@@ -19,6 +25,9 @@ export default {
   methods: {
     fetchCart () {
       this.$store.dispatch('fetchCart')
+    },
+    removeFromCart (id) {
+      this.$store.dispatch('removeCart', id)
     }
   },
   created () {

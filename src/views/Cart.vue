@@ -12,6 +12,14 @@ export default {
   name: 'Cart',
   components: {
     CardCart, Navbar
+  },
+  created () {
+    const token = localStorage.getItem('access_token')
+    if (!token) {
+      this.$router.push({
+        name: 'Login'
+      })
+    }
   }
 }
 </script>

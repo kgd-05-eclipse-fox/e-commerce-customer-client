@@ -84,7 +84,7 @@ export default new Vuex.Store({
           console.log(err.response.data)
         })
     },
-    fetchCart (context, payload) {
+    fetchCart (context) {
       const token = localStorage.getItem('access_token')
       axios({
         url: '/cart',
@@ -93,6 +93,26 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           context.commit('GET_CART', data)
+        })
+        .catch(err => {
+          console.log(err.response.data)
+        })
+    },
+    removeCart (context, id) {
+      const token = localStorage.getItem('access_token')
+      axios({
+        url: `/cart/${id}`,
+        method: 'DELETE',
+        headers: { access_token: token }
+      })
+        .then(({ data }) => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Product has been remove from your cart',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          context.dispatch('fetchCart')
         })
         .catch(err => {
           console.log(err.response.data)
