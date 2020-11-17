@@ -1,18 +1,35 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <Carousel/>
+    <div class="container mt-5">
+      <div class="row">
+        <ProductCard
+          v-for="product in products"
+          :key="product.id"
+          :product="product"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import Carousel from '../components/Carousel'
+import ProductCard from '../components/ProductCard'
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld
+    Carousel,
+    ProductCard
+  },
+  computed: {
+    products () {
+      return this.$store.state.products
+    }
+  },
+  created () {
+    this.$store.dispatch('getProducts')
   }
 }
 </script>
