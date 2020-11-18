@@ -3,7 +3,7 @@
     <div class="card-header border-0">
         <img :src="item.Product.image_url" alt="image" height="150px" width="200px">
     </div>
-    <div class="card-block pt-4 pl-2">
+    <div class="card-block pt-4 pl-2" style="width: 300px">
         <h4 class="card-title"><strong>{{ item.Product.name }}</strong></h4>
         <p class="card-text">{{ toCurrency }} each</p>
         <div>

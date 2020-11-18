@@ -2,7 +2,7 @@
   <div id="MyCarousel" class="carousel slide" data-ride="carousel">
       <div class="carousel-inner">
           <div class="carousel-item active">
-              <img class="d-block w-100" :src="this.banner[0].image_url" alt="First slide" height="500px">
+              <img class="d-block w-100" :src="this.banner.image_url" alt="First slide" height="500px">
           </div>
           <div v-for="banner in banners" :key="banner.id" class="carousel-item">
               <img class="d-block w-100" :src="banner.image_url" alt="Banner" height="500px">
@@ -24,7 +24,7 @@ export default {
   name: 'Carousel',
   computed: {
     banner () {
-      return this.$store.state.banners.slice(0, 1)
+      return this.$store.state.banners[0]
     },
     banners () {
       return this.$store.state.banners.slice(1)
