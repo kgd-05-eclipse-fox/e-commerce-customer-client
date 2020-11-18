@@ -67,7 +67,7 @@ export default new Vuex.Store({
     },
     deleteUserProduct (context, id) {
       const accesstoken = localStorage.getItem('access_token')
-      return axios.delete('/userproduct', id, ({ headers: { access_token: accesstoken } }))
+      return axios.delete(`/userproduct/${id}`, ({ headers: { access_token: accesstoken } }))
     }
   },
   modules: {
