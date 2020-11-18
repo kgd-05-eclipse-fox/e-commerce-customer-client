@@ -18,7 +18,7 @@ export default {
 
 <style>
 .posision {
-  margin-top: 250px;
+  margin-top: 40px;
 }
 .footer{
   background-color: black;

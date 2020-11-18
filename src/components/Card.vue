@@ -2,42 +2,7 @@
 <div class="container d-flex p-0">
     <div class=" row">
         <div v-for="el in allDataProduct" :key="el.id">
-            <div v-if="el == allDataProduct[0] || el == allDataProduct[1] || el == allDataProduct[2]" class="col-3 mx-4">
-                <div class="flip-box">
-                    <div class="flip-box-inner">
-                        <div class="flip-box-front">
-                            <div class="card text-light" style="background-color: #223B4C; border-radius: 20px;">
-                                <img class="card-img-top" :src="el.image_url" alt="HYPERLITE SUMMIT 35">
-                                <div class="card-body">
-                                    <h6 class="card-title">{{ el.name }}</h6>
-                                    <h6 class="card-title">Stock: {{ el.stock }} Pcs</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flip-box-back">
-                            <div class="card text-light" style="background-color: #223B4C; border-radius: 20px;">
-                                <img class="card-img-top" :src="el.image_url" alt="HYPERLITE SUMMIT 35">
-                                <div class="card-body">
-                                    <h6 class="card-title">{{ el.name }}</h6>
-                                    <p style="font-size: small;" class="card-text mb-1  text-monospace">Rp. {{ el.price }},00</p>
-                                    <div class=" d-flex justify-content-between">
-                                        <a href="">
-                                            <img class=" my-1" src="../assets/img/love.png" alt="">
-                                        </a>
-                                        <a href="">
-                                            <img @click.prevent="infoGambar(el)" class=" my-1" src="../assets/img/detail.png" alt="">
-                                        </a>
-                                        <a href="">
-                                            <img @click.prevent="getDataBasket(el.id)" class=" my-1" src="../assets/img/shop.png" alt="">
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div v-if="el !== allDataProduct[0] || el !== allDataProduct[1] || el !== allDataProduct[2]" class="col-3 mx-4" style="margin-top: 200px;">
+            <div v-if="el !== allDataProduct[0] || el !== allDataProduct[1] || el !== allDataProduct[2]" class="col-3 mx-4" style="margin-bottom: 200px;">
                 <div class="flip-box">
                     <div class="flip-box-inner">
                         <div class="flip-box-front">

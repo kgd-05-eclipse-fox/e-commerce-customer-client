@@ -34,10 +34,10 @@
                 <h3 class=" mt-2">Total</h3>
             </div>
             <div class=" col-8 align-items-center text-light" style="background-color: rgb(0, 0, 0, 0.5);">
-                <h3 class=" mt-2">Rp. 10.000.000,00</h3>
+                <h3 class=" mt-2">Rp. {{ getTotalBasket }},00</h3>
             </div>
             <div class="chectOut col-1 text-light p-0">
-                <a href="#" style="text-decoration: none; color: white;"><h6 class=" mt-3">Chect Out</h6></a>
+                <a @click.prevent="checkOutBasket" href="#" style="text-decoration: none; color: white;"><h6 class=" mt-3">Chect Out</h6></a>
             </div>
         </div>
     </div>
@@ -68,6 +68,7 @@ export default {
         if (result.isConfirmed) {
           this.$store.dispatch('deleteUserProduct', id)
             .then(({ data }) => {
+              this.$store.dispatch('getTotalPrice')
               this.$store.dispatch('getAllDataBasket')
               this.$router.push({ name: 'Basket' })
               Swal.fire({
@@ -107,6 +108,7 @@ export default {
         }
         this.$store.dispatch('updateQuantity', dataUpdate)
           .then(({ data }) => {
+            this.$store.dispatch('getTotalPrice')
             this.$store.dispatch('getAllDataBasket')
             this.$router.push({ name: 'Basket' })
           })
@@ -144,6 +146,7 @@ export default {
         }
         this.$store.dispatch('updateQuantity', dataUpdate)
           .then(({ data }) => {
+            this.$store.dispatch('getTotalPrice')
             this.$store.dispatch('getAllDataBasket')
             this.$router.push({ name: 'Basket' })
           })
@@ -158,11 +161,33 @@ export default {
             console.log(err)
           })
       }
+    },
+    checkOutBasket () {
+      const total = this.getTotalBasket
+      console.log(total, '<<<<<<<<<<<<<<<<<<<<')
+      this.$store.dispatch('checkOutDataBasket', total)
+        .then(({ data }) => {
+          this.$store.dispatch('getAllDataProduct')
+          this.$router.push({ name: 'Home' })
+        })
+        .catch(err => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops, Sorry...',
+            text: 'Something went wrong, Internal Server ERROR',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          console.log(err)
+        })
     }
   },
   computed: {
     dataBasket () {
       return this.$store.state.setDataAllBasket
+    },
+    getTotalBasket () {
+      return this.$store.state.setTotalBasket
     }
   },
   components: {
@@ -170,6 +195,7 @@ export default {
   },
   created () {
     this.$store.dispatch('getAllDataBasket')
+    this.$store.dispatch('getTotalPrice')
   }
 }
 </script>

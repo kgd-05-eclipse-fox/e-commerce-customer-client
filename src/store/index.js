@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     setAllDataBanner: [],
     setDataAllProduct: [],
-    setDataAllBasket: []
+    setDataAllBasket: [],
+    setTotalBasket: []
   },
   mutations: {
     setAllDataBanner (state, payload) {
@@ -19,6 +20,9 @@ export default new Vuex.Store({
     },
     setDataAllBasket (state, payload) {
       state.setDataAllBasket = payload
+    },
+    setTotalBasket (state, payload) {
+      state.setTotalBasket = payload
     }
   },
   actions: {
@@ -72,6 +76,19 @@ export default new Vuex.Store({
     updateQuantity (context, dataUpdate) {
       const accesstoken = localStorage.getItem('access_token')
       return axios.patch(`/userproduct/${dataUpdate.id}`, dataUpdate, ({ headers: { access_token: accesstoken } }))
+    },
+    getTotalPrice (context) {
+      const accesstoken = localStorage.getItem('access_token')
+      axios
+        .get('/userproduct/total', ({ headers: { access_token: accesstoken } }))
+        .then(({ data }) => {
+          context.commit('setTotalBasket', data)
+        })
+        .catch(err => console.log(err))
+    },
+    checkOutDataBasket (context, total) {
+      const accesstoken = localStorage.getItem('access_token')
+      return axios.post('/chechout', total, ({ headers: { access_token: accesstoken } }))
     }
   },
   modules: {

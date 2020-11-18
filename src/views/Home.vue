@@ -42,6 +42,7 @@ export default {
     },
     goToBasket () {
       this.$store.dispatch('getAllDataBasket')
+      this.$store.dispatch('getTotalPrice')
       this.$router.push({ name: 'Basket' })
     }
   },
