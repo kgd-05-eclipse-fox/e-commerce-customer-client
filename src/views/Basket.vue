@@ -19,10 +19,10 @@
                     <h3>Name: {{ el.Product.name }}</h3>
                 </div>
                 <div class=" d-flex">
-                    <h3>Price: Rp. {{ el.Product.price}},00</h3>
+                    <h3>Price: Rp. {{ el.Product.price }},00</h3>
                 </div>
                 <div class=" d-flex">
-                    <h3>Total : <a href="#"><img src="../assets/img/minus.png" width="20px" alt=""></a> {{ el.quantity }} <a href="#"><img width="20px" src="../assets/img/plus.png" alt=""></a></h3>
+                    <h3>Total : <a href="#"><img @click.prevent="minus({ id: el.id, stock: el.Product.stock, quantity: el.quantity })" src="../assets/img/minus.png" width="20px" alt=""></a> {{ el.quantity }} <a href="#"><img @click.prevent="plus({ id: el.id, stock: el.Product.stock, quantity: el.quantity })" width="20px" src="../assets/img/plus.png" alt=""></a></h3>
                 </div>
             </div>
             <div class="deletBasket col-1 p-0 text-center text-light">
@@ -90,6 +90,74 @@ export default {
             })
         }
       })
+    },
+    minus (dataMinus) {
+      const dataUp = {
+        id: dataMinus.id,
+        stock: dataMinus.stock,
+        quantity: dataMinus.quantity
+      }
+      if (dataUp.quantity === 1) {
+        this.deleteDataProduct(dataUp.id)
+      } else {
+        const newQuantiity = dataUp.quantity - 1
+        const dataUpdate = {
+          id: dataUp.id,
+          quantity: newQuantiity
+        }
+        this.$store.dispatch('updateQuantity', dataUpdate)
+          .then(({ data }) => {
+            this.$store.dispatch('getAllDataBasket')
+            this.$router.push({ name: 'Basket' })
+          })
+          .catch(err => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops, Sorry...',
+              text: 'Something went wrong, Internal Server ERROR',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            console.log(err)
+          })
+      }
+    },
+    plus (dataPlus) {
+      const dataUp = {
+        id: dataPlus.id,
+        stock: dataPlus.stock,
+        quantity: dataPlus.quantity
+      }
+      if (dataUp.quantity === dataUp.stock) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops, Sorry...',
+          text: 'Something went wrong, Over Stock',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      } else {
+        const newQuantiity = dataUp.quantity + 1
+        const dataUpdate = {
+          id: dataUp.id,
+          quantity: newQuantiity
+        }
+        this.$store.dispatch('updateQuantity', dataUpdate)
+          .then(({ data }) => {
+            this.$store.dispatch('getAllDataBasket')
+            this.$router.push({ name: 'Basket' })
+          })
+          .catch(err => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops, Sorry...',
+              text: 'Something went wrong, Internal Server ERROR',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            console.log(err)
+          })
+      }
     }
   },
   computed: {
