@@ -5,7 +5,7 @@
     </div>
     <div class="container">
         <div class=" d-flex justify-content-center mb-4 posisiBasket">
-            <h1  style="font-family: 'Pacifico', cursive;" class=" text-light">Your History</h1>
+            <h1  style="font-family: 'Pacifico', cursive;" class=" text-light">Your History Transaction</h1>
         </div>
         <!-- get data product "getAllDataProductUser[0].Product.image_url" -->
         <div class="row d-flex- justify-content-center">

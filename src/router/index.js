@@ -5,6 +5,7 @@ import Home from '../views/Home.vue'
 import Register from '../views/Register.vue'
 import Basket from '../views/Basket.vue'
 import CheckOut from '../views/CheckOut.vue'
+import Favorit from '../views/Favorit.vue'
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ const routes = [
     path: '/checkout',
     name: 'CheckOut',
     component: CheckOut
+  },
+  {
+    path: '/favorit',
+    name: 'Favorit',
+    component: Favorit
   }
 ]
 

@@ -10,7 +10,8 @@ export default new Vuex.Store({
     setDataAllProduct: [],
     setDataAllBasket: [],
     setTotalBasket: [],
-    setDataCheckOut: []
+    setDataCheckOut: [],
+    setDataFavorit: []
   },
   mutations: {
     setAllDataBanner (state, payload) {
@@ -27,6 +28,9 @@ export default new Vuex.Store({
     },
     setDataCheckOut (state, payload) {
       state.setDataCheckOut = payload
+    },
+    setDataFavorit (state, payload) {
+      state.setDataFavorit = payload
     }
   },
   actions: {
@@ -106,6 +110,20 @@ export default new Vuex.Store({
     deleteHistory (context, id) {
       const accesstoken = localStorage.getItem('access_token')
       return axios.delete(`/chechout/${id}`, ({ headers: { access_token: accesstoken } }))
+    },
+    postProductToFavorit (context, ProductId) {
+      const accesstoken = localStorage.getItem('access_token')
+      return axios.post('/favorit', ProductId, ({ headers: { access_token: accesstoken } }))
+    },
+    getAllDataFavorit (context) {
+      const accesstoken = localStorage.getItem('access_token')
+      axios
+        .get('/favorit', ({ headers: { access_token: accesstoken } }))
+        .then(({ data }) => {
+          console.log('masuk then store')
+          context.commit('setDataFavorit', data)
+        })
+        .catch(err => console.log(err))
     }
   },
   modules: {

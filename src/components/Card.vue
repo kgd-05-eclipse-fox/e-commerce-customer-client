@@ -22,7 +22,7 @@
                                     <p style="font-size: small;" class="card-text mb-1  text-monospace">Rp. {{ el.price }},00</p>
                                     <div class=" d-flex justify-content-between">
                                         <a href="">
-                                            <img class=" my-1" src="../assets/img/love.png" alt="">
+                                            <img @click.prevent="postFavorit(el.id)" class=" my-1" src="../assets/img/love.png" alt="">
                                         </a>
                                         <a href="">
                                             <img @click.prevent="infoGambar(el)" class=" my-1" src="../assets/img/detail.png" alt="">
@@ -74,7 +74,7 @@ export default {
           Swal.fire({
             position: 'top-end',
             icon: 'success',
-            title: 'Success Add Product to Basket',
+            title: 'Success Add Product to Your Favorit',
             showConfirmButton: false,
             timer: 1500
           })
@@ -99,6 +99,33 @@ export default {
             })
             console.log(err)
           }
+        })
+    },
+    postFavorit (id) {
+      const payload = {
+        ProductId: id
+      }
+      this.$store.dispatch('postProductToFavorit', payload)
+        .then(({ data }) => {
+          this.$store.dispatch('getAllDataProduct')
+          this.$router.push({ name: 'Home' })
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Success Add Product to Basket',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        })
+        .catch(err => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops, Sorry...',
+            text: 'Something went wrong, Internal Server ERROR',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          console.log(err)
         })
     }
   },
