@@ -123,7 +123,7 @@ export default new Vuex.Store({
       const token = localStorage.getItem('access_token')
       return axios({
         method: 'DELETE',
-        url: '/carts',
+        url: '/carts/checkout',
         headers: {
           access_token: token
         }
