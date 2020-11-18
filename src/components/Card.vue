@@ -115,20 +115,34 @@ export default {
           })
         })
         .catch(err => {
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops, Sorry...',
-            text: 'Something went wrong, Internal Server ERROR',
-            showConfirmButton: false,
-            timer: 1500
-          })
-          console.log(err)
+          const overStock = err.response.data.msg
+          if (overStock === 'Over Stock') {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops, Sorry...',
+              text: 'Something went wrong, OVER STOCK',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops, Sorry...',
+              text: 'Something went wrong, Internal Server ERROR',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            console.log(err)
+          }
         })
     }
   },
   computed: {
     allDataProduct () {
       return this.$store.state.setDataAllProduct
+    },
+    allDataBasket () {
+      return this.$store.state.setDataAllBasket
     }
   }
 }
