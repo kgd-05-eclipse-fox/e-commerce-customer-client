@@ -43,6 +43,9 @@ export default new Vuex.Store({
           context.commit('setDataAllProduct', data)
         })
         .catch(err => console.log(err))
+    },
+    registerUser (context, registerUser) {
+      return axios.post('/register', registerUser)
     }
   },
   modules: {
