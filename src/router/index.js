@@ -4,6 +4,7 @@ import Login from '../views/Login.vue'
 import Home from '../views/Home.vue'
 import Register from '../views/Register.vue'
 import Basket from '../views/Basket.vue'
+import CheckOut from '../views/CheckOut.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
     path: '/basket',
     name: 'Basket',
     component: Basket
+  },
+  {
+    path: '/checkout',
+    name: 'CheckOut',
+    component: CheckOut
   }
 ]
 

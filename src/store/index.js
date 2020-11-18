@@ -9,7 +9,8 @@ export default new Vuex.Store({
     setAllDataBanner: [],
     setDataAllProduct: [],
     setDataAllBasket: [],
-    setTotalBasket: []
+    setTotalBasket: [],
+    setDataCheckOut: []
   },
   mutations: {
     setAllDataBanner (state, payload) {
@@ -23,6 +24,9 @@ export default new Vuex.Store({
     },
     setTotalBasket (state, payload) {
       state.setTotalBasket = payload
+    },
+    setDataCheckOut (state, payload) {
+      state.setDataCheckOut = payload
     }
   },
   actions: {
@@ -89,6 +93,19 @@ export default new Vuex.Store({
     checkOutDataBasket (context, total) {
       const accesstoken = localStorage.getItem('access_token')
       return axios.post('/chechout', total, ({ headers: { access_token: accesstoken } }))
+    },
+    getAllDataCheckOut (context) {
+      const accesstoken = localStorage.getItem('access_token')
+      axios
+        .get('/chechout', ({ headers: { access_token: accesstoken } }))
+        .then(({ data }) => {
+          context.commit('setDataCheckOut', data)
+        })
+        .catch(err => console.log(err))
+    },
+    deleteHistory (context, id) {
+      const accesstoken = localStorage.getItem('access_token')
+      return axios.delete(`/chechout/${id}`, ({ headers: { access_token: accesstoken } }))
     }
   },
   modules: {

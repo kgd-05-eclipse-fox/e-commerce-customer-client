@@ -41,7 +41,7 @@
             </div>
         </div>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
@@ -163,23 +163,43 @@ export default {
       }
     },
     checkOutBasket () {
-      const total = this.getTotalBasket
-      console.log(total, '<<<<<<<<<<<<<<<<<<<<')
-      this.$store.dispatch('checkOutDataBasket', total)
-        .then(({ data }) => {
-          this.$store.dispatch('getAllDataProduct')
-          this.$router.push({ name: 'Home' })
-        })
-        .catch(err => {
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops, Sorry...',
-            text: 'Something went wrong, Internal Server ERROR',
-            showConfirmButton: false,
-            timer: 1500
-          })
-          console.log(err)
-        })
+      const total = {
+        total: this.getTotalBasket
+      }
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Check Out Now!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$store.dispatch('checkOutDataBasket', total)
+            .then(({ data }) => {
+              this.$store.dispatch('getAllDataProduct')
+              this.$router.push({ name: 'Home' })
+              Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Your Product has been Check Out',
+                showConfirmButton: false,
+                timer: 1500
+              })
+            })
+            .catch(err => {
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops, Sorry...',
+                text: 'Something went wrong, Internal Server ERROR',
+                showConfirmButton: false,
+                timer: 1500
+              })
+              console.log(err)
+            })
+        }
+      })
     }
   },
   computed: {

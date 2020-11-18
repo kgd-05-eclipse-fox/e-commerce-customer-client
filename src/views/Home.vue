@@ -10,6 +10,7 @@
     <div id="mySidenav" class="sidenav">
       <a @click.prevent="goToBasket" href="#" id="about"><img class=" my-1 ml-5" src="../assets/img/shop.png" alt=""></a>
       <a href="#" id="blog"><img class=" my-1 ml-5" src="../assets/img/love.png" alt=""></a>
+      <a @click.prevent="goToHistory" href="#" id="history"><img class=" my-1 ml-5" src="../assets/img/history.png" alt=""></a>
   </div>
     <div class="container d-flex p-0">
         <Card/>
@@ -44,6 +45,10 @@ export default {
       this.$store.dispatch('getAllDataBasket')
       this.$store.dispatch('getTotalPrice')
       this.$router.push({ name: 'Basket' })
+    },
+    goToHistory () {
+      this.$store.dispatch('getAllDataCheckOut')
+      this.$router.push({ name: 'CheckOut' })
     }
   },
   components: {
@@ -94,5 +99,10 @@ export default {
 #blog {
   top: 100px;
   background-color: #F94857; /* Blue */
+}
+
+#history{
+  top: 180px;
+  background-color: #1888FB;
 }
 </style>

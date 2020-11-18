@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
+
 export default {
   name: 'NavBar',
   data () {
@@ -37,8 +39,27 @@ export default {
   },
   methods: {
     logout () {
-      localStorage.clear()
-      this.$router.push({ name: 'Login' })
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be Log out!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Log out!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          localStorage.clear()
+          this.$router.push({ name: 'Login' })
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Your has been Logout',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }
+      })
     }
   }
 }
