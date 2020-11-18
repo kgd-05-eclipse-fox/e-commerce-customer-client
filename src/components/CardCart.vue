@@ -10,9 +10,9 @@
           <p>{{product.Product.name}}</p>
           <p>Rp. {{product.Product.price}}</p>
           <p>{{product.Qty}}</p>
-          <button type="submit" class="btn btn-primary btn-sm mb-2" @click="addQty(product.ProductId)" :disabled="product.Qty == product.Product.stock ? true : false">+</button>
-          <button type="submit" class="btn btn-primary btn-sm mb-2" @click="decQty(product.ProductId)" :disabled="product.Qty == 1 ? true : false">-</button>
-          <button type="submit" class="btn btn-danger btn-sm" @click="removeFromCart(product.ProductId)">Remove Item</button>
+          <button type="submit" class="btn btn-primary btn-sm mb-2" @click="addQty(product.id)" :disabled="product.Qty == product.Product.stock ? true : false">+</button>
+          <button type="submit" class="btn btn-primary btn-sm mb-2" @click="decQty(product.id)" :disabled="product.Qty == 1 ? true : false">-</button>
+          <button type="submit" class="btn btn-danger btn-sm" @click="removeFromCart(product.id)">Remove Item</button>
         </div>
       </div>
     </div>
@@ -27,6 +27,7 @@ export default {
       this.$store.dispatch('fetchCart')
     },
     removeFromCart (id) {
+      // console.log(id)
       this.$store.dispatch('removeCart', id)
     },
     addQty (id) {
