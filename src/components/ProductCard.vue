@@ -41,7 +41,11 @@ export default {
             this.$store.dispatch('getCart')
           })
           .catch(err => {
-            console.log(err)
+            Swal.fire({
+              icon: 'error',
+              title: 'Something Went Wrong..',
+              text: err.response.data.msg
+            })
           })
       } else {
         this.$router.push({ name: 'Login' })

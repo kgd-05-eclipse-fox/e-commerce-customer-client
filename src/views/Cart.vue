@@ -52,10 +52,13 @@ export default {
                   icon: 'success',
                   title: data.msg
                 })
-                console.log(data)
               })
               .catch(err => {
-                console.log(err)
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Something Went Wrong',
+                  text: err.response.data.msg
+                })
               })
           }
         })
