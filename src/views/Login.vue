@@ -87,6 +87,8 @@ export default {
       this.$router.push({ name: 'Login' })
     } else {
       this.$router.push({ name: 'Home' })
+      this.$store.dispatch('getALlDataBanner')
+      this.$store.dispatch('getAllDataProduct')
     }
   }
 }

@@ -7,7 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     setAllDataBanner: [],
-    setDataAllProduct: []
+    setDataAllProduct: [],
+    setDataAllBasket: []
   },
   mutations: {
     setAllDataBanner (state, payload) {
@@ -15,6 +16,9 @@ export default new Vuex.Store({
     },
     setDataAllProduct (state, payload) {
       state.setDataAllProduct = payload
+    },
+    setDataAllBasket (state, payload) {
+      state.setDataAllBasket = payload
     }
   },
   actions: {
@@ -46,6 +50,24 @@ export default new Vuex.Store({
     },
     registerUser (context, registerUser) {
       return axios.post('/register', registerUser)
+    },
+    postProductToBasket (context, ProductId) {
+      const accesstoken = localStorage.getItem('access_token')
+      return axios.post('/userproduct', ProductId, ({ headers: { access_token: accesstoken } }))
+    },
+    getAllDataBasket (context) {
+      const accesstoken = localStorage.getItem('access_token')
+      axios
+        .get('/userproduct', ({ headers: { access_token: accesstoken } }))
+        .then(({ data }) => {
+          console.log(data)
+          context.commit('setDataAllBasket', data)
+        })
+        .catch(err => console.log(err))
+    },
+    deleteUserProduct (context, id) {
+      const accesstoken = localStorage.getItem('access_token')
+      return axios.delete('/userproduct', id, ({ headers: { access_token: accesstoken } }))
     }
   },
   modules: {

@@ -7,81 +7,26 @@
         <div class=" d-flex justify-content-center mb-4 posisiBasket">
             <h1  style="font-family: 'Pacifico', cursive;" class=" text-light">Your Basket</h1>
         </div>
-        <div class="row d-flex- justify-content-center">
-            <div class=" col-3" style="background-color: rgb(0, 0, 0, 0.5);">
-                <img id="myImg" class="card my-2 text-light" src="https://eigeradventure.com/media/catalog/product/cache/4fcc276cc458f0c20c7cb141f7d9fdf7/9/1/910005604002_1_2.jpg" alt="Snow" style="width:100%;max-width:300px">
-                <!-- The Modal -->
-                <div id="myModal" class="modal">
-                    <!-- The Close Button -->
-                    <span class="close">&times;</span>
-                    <!-- Modal Content (The Image) -->
-                    <img class="modal-content" id="img01">
-                    <!-- Modal Caption (Image Text) -->
-                    <div id="caption"></div>
-                </div>
-            </div>
-            <div class=" col-8 align-items-center text-light" style="background-color: rgb(0, 0, 0, 0.5);">
-                <div class=" d-flex mt-3">
-                    <h3>Name: Lunatic 60l</h3>
-                </div>
-                <div class=" d-flex">
-                    <h3>Price: Rp. 2.000.000</h3>
-                </div>
-                <div class=" d-flex">
-                    <h3>Total : <a href="#"><img src="../assets/img/minus.png" width="20px" alt=""></a> 1 <a href="#"><img width="20px" src="../assets/img/plus.png" alt=""></a></h3>
-                </div>
-            </div>
-            <div class="deletBasket col-1 p-0 text-center text-light">
-                <a href="#" style="text-decoration: none; color: white;"><h3 style="margin-top: 80px;">Delete</h3></a>
-            </div>
-        </div>
-        <div class="row d-flex- justify-content-center">
-            <div class=" col-3" style="background-color: rgb(0, 0, 0, 0.5);">
-                <img id="myImg" class="card my-2 text-light" src="https://eigeradventure.com/media/catalog/product/cache/4fcc276cc458f0c20c7cb141f7d9fdf7/9/1/910005435001-ELIPTIC-SOLARIS-45L-1A-BLK1.jpg" alt="Snow" style="width:100%;max-width:300px">
-                <!-- The Modal -->
-                <div id="myModal" class="modal">
-                    <!-- The Close Button -->
-                    <span class="close">&times;</span>
-                    <!-- Modal Content (The Image) -->
-                    <img class="modal-content" id="img01">
-                    <!-- Modal Caption (Image Text) -->
-                    <div id="caption"></div>
-                </div>
-            </div>
-            <div class=" col-8 align-items-center text-light" style="background-color: rgb(0, 0, 0, 0.5);">
-                <div class=" d-flex mt-3">
-                    <h3>Name: Lunatic 60l</h3>
-                </div>
-                <div class=" d-flex">
-                    <h3>Price: Rp. 2.000.000</h3>
-                </div>
-                <div class=" d-flex">
-                    <h3>Total : <a href="#"><img src="../assets/img/minus.png" width="20px" alt=""></a> 1 <a href="#"><img width="20px" src="../assets/img/plus.png" alt=""></a></h3>
-                </div>
-            </div>
-            <div class="deletBasket col-1 p-0 text-center text-light">
-                <a href="#" style="text-decoration: none; color: white;"><h3 style="margin-top: 80px;">Delete</h3></a>
-            </div>
-        </div>
-        <div class="row d-flex- justify-content-center">
+        <!-- get data product "getAllDataProductUser[0].Product.image_url" -->
+        <div v-for="el in dataBasket" :key="el.id" class="row d-flex- justify-content-center">
             <div class=" col-3" style="background-color: rgb(0, 0, 0, 0.5);">
                 <div class="card my-2 text-light">
-                    <img class="card-img-top" src="https://eigeradventure.com/media/catalog/product/cache/4fcc276cc458f0c20c7cb141f7d9fdf7/9/1/910005604002_1_2.jpg" alt="HYPERLITE SUMMIT 35">
+                    <img class="card-img-top" :src="el.Product.image_url" alt="HYPERLITE SUMMIT 35">
                 </div>
             </div>
             <div class=" col-8 align-items-center text-light" style="background-color: rgb(0, 0, 0, 0.5);">
                 <div class=" d-flex mt-3">
-                    <h3>Name: Lunatic 60l</h3>
+                    <h3>Name: {{ el.Product.name }}</h3>
                 </div>
                 <div class=" d-flex">
-                    <h3>Price: Rp. 2.000.000</h3>
+                    <h3>Price: Rp. {{ el.Product.price}},00</h3>
                 </div>
                 <div class=" d-flex">
-                    <h3>Total : <a href="#"><img src="../assets/img/minus.png" width="20px" alt=""></a> 1 <a href="#"><img width="20px" src="../assets/img/plus.png" alt=""></a></h3>
+                    <h3>Total : <a href="#"><img src="../assets/img/minus.png" width="20px" alt=""></a> {{ el.quantity }} <a href="#"><img width="20px" src="../assets/img/plus.png" alt=""></a></h3>
                 </div>
             </div>
             <div class="deletBasket col-1 p-0 text-center text-light">
-                <a href="#" style="text-decoration: none; color: white;"><h3 style="margin-top: 80px;">Delete</h3></a>
+                <a @click.prevent="deleteDataProduct(el.id)" href="#" style="text-decoration: none; color: white;"><h3 style="margin-top: 80px;">Delete</h3></a>
             </div>
         </div>
         <div class="row d-flex  text-center mb-4 border-top">
@@ -101,6 +46,7 @@
 
 <script>
 import NavBar from '@/components/NavBar.vue'
+import Swal from 'sweetalert2'
 
 export default {
   name: 'Basket',
@@ -108,8 +54,54 @@ export default {
     return {
     }
   },
+  methods: {
+    deleteDataProduct (id) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$store.dispatch('deleteUserProduct', id)
+            .then(({ data }) => {
+              this.$store.dispatch('getAllDataBasket')
+              this.$router.push({ name: 'Basket' })
+              Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Your Product has been Delete',
+                showConfirmButton: false,
+                timer: 1500
+              })
+            })
+            .catch(err => {
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops, Sorry...',
+                text: 'Something went wrong, Internal Server ERROR',
+                showConfirmButton: false,
+                timer: 1500
+              })
+              console.log(err)
+            })
+        }
+      })
+    }
+  },
+  computed: {
+    dataBasket () {
+      return this.$store.state.setDataAllBasket
+    }
+  },
   components: {
     NavBar
+  },
+  created () {
+    this.$store.dispatch('getAllDataBasket')
   }
 }
 </script>

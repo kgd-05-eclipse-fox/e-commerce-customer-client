@@ -41,6 +41,7 @@ export default {
       this.$store.dispatch('getAllDataProduct')
     },
     goToBasket () {
+      this.$store.dispatch('getAllDataBasket')
       this.$router.push({ name: 'Basket' })
     }
   },

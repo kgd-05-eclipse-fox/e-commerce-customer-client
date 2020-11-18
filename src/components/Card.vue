@@ -28,7 +28,7 @@
                                             <img @click.prevent="infoGambar(el)" class=" my-1" src="../assets/img/detail.png" alt="">
                                         </a>
                                         <a href="">
-                                            <img class=" my-1" src="../assets/img/shop.png" alt="">
+                                            <img @click.prevent="getDataBasket(el.id)" class=" my-1" src="../assets/img/shop.png" alt="">
                                         </a>
                                     </div>
                                 </div>
@@ -63,7 +63,7 @@
                                             <img @click.prevent="infoGambar(el)" class=" my-1" src="../assets/img/detail.png" alt="">
                                         </a>
                                         <a href="">
-                                            <img class=" my-1" src="../assets/img/shop.png" alt="">
+                                            <img @click.prevent="postDataBasket(el.id)" class=" my-1" src="../assets/img/shop.png" alt="">
                                         </a>
                                     </div>
                                 </div>
@@ -97,6 +97,33 @@ export default {
         imageHeight: 250,
         imageAlt: 'A tall image'
       })
+    },
+    postDataBasket (id) {
+      const payload = {
+        ProductId: id
+      }
+      this.$store.dispatch('postProductToBasket', payload)
+        .then(({ data }) => {
+          this.$store.dispatch('getAllDataProduct')
+          this.$router.push({ name: 'Home' })
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Success Add Product to Basket',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        })
+        .catch(err => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops, Sorry...',
+            text: 'Something went wrong, Internal Server ERROR',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          console.log(err)
+        })
     }
   },
   computed: {
