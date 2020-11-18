@@ -117,6 +117,34 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err.response.data)
         })
+    },
+    addQty (context, id) {
+      const token = localStorage.getItem('access_token')
+      axios({
+        url: `/cart/${id}`,
+        method: 'PATCH',
+        headers: { access_token: token }
+      })
+        .then(({ data }) => {
+          context.dispatch('fetchCart')
+        })
+        .catch(err => {
+          console.log(err.response.data)
+        })
+    },
+    decQty (context, id) {
+      const token = localStorage.getItem('access_token')
+      axios({
+        url: `/cart/${id}`,
+        method: 'PUT',
+        headers: { access_token: token }
+      })
+        .then(({ data }) => {
+          context.dispatch('fetchCart')
+        })
+        .catch(err => {
+          console.log(err.response.data)
+        })
     }
   },
   modules: {
