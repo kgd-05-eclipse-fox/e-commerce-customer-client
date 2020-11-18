@@ -6,18 +6,16 @@
       <h3 class="mb-3">Put Some Stuff in here, it's getting dusty</h3>
       <img src="../assets/empty.svg" alt="empty cart" width="30%">
     </div>
-    <div class="row mt-5" v-else-if="carts[0]">
+    <div class="row mt-1 px-5" style="margin-left:3em" v-else-if="carts[0]">
       <div class="col-6">
-        <div class="row">
-          <CartItem
-            v-for="item in carts"
-            :key="item.id"
-            :item="item"
-          />
-        </div>
+        <CartItem
+          v-for="item in carts"
+          :key="item.id"
+          :item="item"
+        />
       </div>
-      <div class=" col-6">
-        <div class="card" style="width:300px;">
+      <div class="col-6">
+        <div class="card mx-5 my-2" style="width:350px">
           <div class="card-body">
             <h5 class="card-subtitle text-muted">Total</h5>
             <h3 class="card-title">{{ totalPrice }}</h3>
@@ -30,13 +28,37 @@
 </template>
 
 <script>
+import { Swal, Toast } from '../config/swal'
 import CartItem from '../components/Cart_Item'
 
 export default {
   name: 'CartPage',
   methods: {
     checkout () {
-      this.$store.dispatch('checkout')
+      Swal.fire({
+        icon: 'question',
+        title: 'You are going to checkout',
+        text: 'Please check your items and the total before confirming.',
+        confirmButtonText: 'Checkout',
+        showCancelButton: true,
+        cancelButtonColor: 'red'
+      })
+        .then(res => {
+          if (res.isConfirmed) {
+            this.$store.dispatch('checkout')
+              .then(({ data }) => {
+                this.$store.dispatch('getCart')
+                Toast.fire({
+                  icon: 'success',
+                  title: data.msg
+                })
+                console.log(data)
+              })
+              .catch(err => {
+                console.log(err)
+              })
+          }
+        })
     }
   },
   computed: {
@@ -56,6 +78,13 @@ export default {
   },
   created () {
     this.$store.dispatch('getCart')
+  },
+  beforeRouteEnter (to, from, next) {
+    if (localStorage.access_token && from.name !== 'Cart') {
+      next()
+    } else {
+      next('/login')
+    }
   }
 }
 </script>

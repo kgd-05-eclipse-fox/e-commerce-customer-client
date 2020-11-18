@@ -24,6 +24,9 @@ export default new Vuex.Store({
     },
     set_cart (state, data) {
       state.carts = data
+    },
+    set_history (state, data) {
+      state.history = data
     }
   },
   actions: {
@@ -117,6 +120,30 @@ export default new Vuex.Store({
       })
     },
     checkout (context) {
+      const token = localStorage.getItem('access_token')
+      return axios({
+        method: 'DELETE',
+        url: '/carts',
+        headers: {
+          access_token: token
+        }
+      })
+    },
+    getHistory (context) {
+      const token = localStorage.getItem('access_token')
+      axios({
+        method: 'GET',
+        url: '/carts/history',
+        headers: {
+          access_token: token
+        }
+      })
+        .then(({ data }) => {
+          context.commit('set_history', data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   },
   modules: {

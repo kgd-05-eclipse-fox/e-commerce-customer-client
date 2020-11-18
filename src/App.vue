@@ -12,6 +12,14 @@ export default {
   name: 'App',
   components: {
     NavBar
+  },
+  created () {
+    const token = localStorage.getItem('access_token')
+    if (token) {
+      this.$store.commit('setLoggedIn', true)
+    } else {
+      this.$store.commit('setLoggedIn', false)
+    }
   }
 }
 </script>

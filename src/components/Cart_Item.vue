@@ -1,17 +1,17 @@
 <template>
-  <div class="col-12">
-    <div class="container d-flex" style="justify-content: space-between; width: 600px">
-      <img :src="item.Product.image_url" alt="image" height="200px">
-      <div class="mt-5">
-        <h2><strong>{{ item.Product.name }}</strong></h2>
-        <p>{{ toCurrency }} each</p>
+  <div class="card flex-row flex-wrap my-2">
+    <div class="card-header border-0">
+        <img :src="item.Product.image_url" alt="image" height="150px" width="200px">
+    </div>
+    <div class="card-block pt-4 pl-2">
+        <h4 class="card-title"><strong>{{ item.Product.name }}</strong></h4>
+        <p class="card-text">{{ toCurrency }} each</p>
         <div>
           <button @click="updateCart(-1)" class="btn btn-sm btn-dark" :disabled="hideButtonMinus">-</button>
           <span class="mx-2">{{item.quantity}}</span>
           <button @click="updateCart(1)" class="btn btn-sm btn-dark" :disabled="hideButtonPlus">+</button>
           <button @click="deleteCart(item.id)" class="btn btn-sm btn-outline-danger ml-2">Remove from cart</button>
         </div>
-      </div>
     </div>
   </div>
 </template>
@@ -84,5 +84,7 @@ export default {
 </script>
 
 <style>
-
+img {
+  object-fit: contain;
+}
 </style>

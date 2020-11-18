@@ -1,12 +1,12 @@
 <template>
-  <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light shadow" style="justify-content: space-between;">
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark shadow" style="justify-content: space-between;">
     <div>
-      <router-link to="/" class="navbar-brand" style="font-weight:bold">SHOP</router-link>
+      <router-link to="/" class="navbar-brand brand-name">SHOPI</router-link>
     </div>
     <div>
       <div v-if="loggedIn">
         <router-link to="/carts" class="navbar-brand mr-4" :class="diminished">
-          <i class="fas fa-shopping-cart nav-pic"><span :class="items === 0 ? 'd-none' : 'not-dim'"> {{items}}</span></i>
+          <i class="fas fa-shopping-cart" :class="!items ? ' nav-pic' : ''"><span :class="items === 0 ? 'd-none' : 'not-dim'"> {{items}}</span></i>
         </router-link>
         <router-link to="/history" class="navbar-brand ml-3">
           <i class="fas fa-history nav-pic"></i>
@@ -78,10 +78,15 @@ export default {
   opacity: 0.7;
 }
 .blue-text {
-  color: #0049FF;
+  color: #ffc93c;
 }
 .not-dim {
-  color: #0049FF;
+  color: #ffc93c;
   opacity: 1;
+  font-size: 16px;
+}
+.brand-name {
+  font-size: 24px;
+  font-weight: bolder;
 }
 </style>

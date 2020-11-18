@@ -1,8 +1,8 @@
 <template>
   <div class="row ml-5" style="margin-top:5em">
     <div class="col-6 text-center">
-      <h5>Some catchy phrase</h5>
-      <br>
+      <h3 class="ml-5">Start Shopping With SHOPI !!</h3>
+      <hr>
       <img src="../assets/shop.svg" alt="shop" width="80%" style="margin-left: 8em">
     </div>
     <div class="col-6">

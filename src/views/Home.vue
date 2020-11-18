@@ -1,7 +1,8 @@
 <template>
   <div>
     <Carousel/>
-    <div class="container mt-5">
+    <hr>
+    <div class="container mt-3">
       <div class="row">
         <ProductCard
           v-for="product in products"

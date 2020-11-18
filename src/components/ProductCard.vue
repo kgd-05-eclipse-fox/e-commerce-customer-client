@@ -1,5 +1,5 @@
 <template>
-  <div class="col-3 my-2">
+  <div class="col-4 my-2">
     <div class="card card-bordered">
       <img :src="product.image_url" class="card-img-top" alt="..." height="200px">
       <div class="card-body">
@@ -8,9 +8,11 @@
         <h6 class="card-subtitle text-left">{{ toCurrency }}</h6>
         <p v-if="!hideAddToCart" class="card-text text-left">In Stock ({{ product.stock }} items)</p>
         <p v-else-if="hideAddToCart" class="card-text text-left text-danger">Not available</p>
+      </div>
+      <div class="card-footer">
         <button
           @click="addToCart(product.id)"
-          class="btn btn-sm btn-block btn-primary"
+          class="btn btn-sm btn-block btn-blue"
           :disabled="hideAddToCart"
           :class="hideAddToCart ? 'diminished' : ''"
         >
@@ -22,7 +24,7 @@
 </template>
 
 <script>
-import { Toast } from '../config/swal'
+import { Swal, Toast } from '../config/swal'
 
 export default {
   name: 'ProductCard',
@@ -43,6 +45,10 @@ export default {
           })
       } else {
         this.$router.push({ name: 'Login' })
+        Swal.fire({
+          icon: 'warning',
+          title: 'Please Login First'
+        })
       }
     }
   },
@@ -67,5 +73,9 @@ export default {
 <style>
 .diminished {
   opacity: 0.6;
+}
+.btn-blue {
+  background-color: #1A72FF;
+  color: white;
 }
 </style>

@@ -5,6 +5,7 @@ import Register from '../views/Register.vue'
 import Login from '../views/Login.vue'
 import Cart from '../views/Cart.vue'
 import History from '../views/History.vue'
+import NotFound from '../views/NotFound.vue'
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ const routes = [
     path: '/history',
     name: 'History',
     component: History
+  },
+  {
+    path: '*',
+    name: 'NotFound',
+    component: NotFound
   }
 ]
 

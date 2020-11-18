@@ -48,6 +48,7 @@
 
 <script>
 import { Swal, Toast } from '../config/swal'
+
 export default {
   name: 'Register',
   data () {
