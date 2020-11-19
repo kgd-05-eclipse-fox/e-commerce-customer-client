@@ -27,6 +27,8 @@ export default {
     }
 
     this.$store.dispatch('fetchProducts')
+    this.$store.dispatch('fetchCarts')
+    this.$store.dispatch('fetchHistories')
   },
   beforeRouteEnter (to, from, next) {
     const accessToken = localStorage.getItem('access_token')
