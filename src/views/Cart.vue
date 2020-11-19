@@ -45,7 +45,7 @@ export default {
       })
         .then(res => {
           if (res.isConfirmed) {
-            this.$store.dispatch('checkout')
+            this.$store.dispatch('checkout', this.totalPrice)
               .then(({ data }) => {
                 this.$store.dispatch('getCart')
                 Toast.fire({

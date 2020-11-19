@@ -119,13 +119,16 @@ export default new Vuex.Store({
         }
       })
     },
-    checkout (context) {
+    checkout (context, data) {
       const token = localStorage.getItem('access_token')
       return axios({
         method: 'DELETE',
         url: '/carts/checkout',
         headers: {
           access_token: token
+        },
+        data: {
+          total: data
         }
       })
     },
