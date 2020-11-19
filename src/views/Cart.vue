@@ -13,14 +13,16 @@ export default {
   components: {
     CardCart, Navbar
   },
-  created () {
+  beforeCreate () {
+    this.$store.dispatch('fetchCart')
     const token = localStorage.getItem('access_token')
-    if (!token) {
-      this.$router.push({
-        name: 'Login'
-      })
+    if (token) {
+      this.$store.commit('SET_LOGIN_STATUS', true)
+    } else {
+      this.$store.commit('SET_LOGIN_STATUS', false)
     }
   }
+
 }
 </script>
 

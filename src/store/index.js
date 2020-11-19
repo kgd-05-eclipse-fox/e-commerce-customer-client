@@ -9,14 +9,22 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     products: [],
-    productsInCart: []
+    productsInCart: {},
+    token: false,
+    histories: []
   },
   mutations: {
-    GET_PRODUCTS (state, data) {
+    SET_PRODUCT (state, data) {
       state.products = data
     },
-    GET_CART (state, data) {
+    SET_CART (state, data) {
       state.productsInCart = data
+    },
+    SET_LOGIN_STATUS (state, data) {
+      state.token = data
+    },
+    SET_HISTORY (state, data) {
+      state.histories = data
     }
   },
   actions: {
@@ -26,7 +34,7 @@ export default new Vuex.Store({
         method: 'GET'
       })
         .then(({ data }) => {
-          context.commit('GET_PRODUCTS', data)
+          context.commit('SET_PRODUCT', data)
         })
         .catch(err => {
           console.log(err.response.data)
@@ -42,10 +50,21 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Register success, please check your email',
+            showConfirmButton: false,
+            timer: 2000
+          })
           router.push('Login')
         })
         .catch(err => {
-          console.log(err.response.data)
+          Swal.fire({
+            icon: 'error',
+            title: err.response.data.message,
+            showConfirmButton: false,
+            timer: 2000
+          })
         })
     },
     signIn (context, payload) {
@@ -60,9 +79,15 @@ export default new Vuex.Store({
         .then(({ data }) => {
           localStorage.setItem('access_token', data.access_token)
           router.push('/')
+          context.commit('SET_LOGIN_STATUS', true)
         })
         .catch(err => {
-          console.log(err.response.data)
+          Swal.fire({
+            icon: 'error',
+            title: err.response.data.message,
+            showConfirmButton: false,
+            timer: 2000
+          })
         })
     },
     addToCart (context, productId) {
@@ -92,7 +117,7 @@ export default new Vuex.Store({
         headers: { access_token: token }
       })
         .then(({ data }) => {
-          context.commit('GET_CART', data)
+          context.commit('SET_CART', data)
         })
         .catch(err => {
           console.log(err.response.data)
@@ -100,28 +125,39 @@ export default new Vuex.Store({
     },
     removeCart (context, id) {
       const token = localStorage.getItem('access_token')
-      axios({
-        url: `/cart/${id}`,
-        method: 'DELETE',
-        headers: { access_token: token }
-      })
-        .then(({ data }) => {
-          Swal.fire({
-            icon: 'success',
-            title: 'Product has been remove from your cart',
-            showConfirmButton: false,
-            timer: 2000
+      Swal.fire({
+        title: 'Are you sure to remove this product ?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios({
+            url: `/cart/${id}`,
+            method: 'DELETE',
+            headers: { access_token: token }
           })
-          context.dispatch('fetchCart')
-        })
-        .catch(err => {
-          console.log(err.response.data)
-        })
+            .then(({ data }) => {
+              Swal.fire({
+                icon: 'success',
+                title: 'Product has been remove from your cart',
+                showConfirmButton: false,
+                timer: 2000
+              })
+              context.dispatch('fetchCart')
+            })
+            .catch(err => {
+              console.log(err.response.data)
+            })
+        }
+      })
     },
     addQty (context, id) {
       const token = localStorage.getItem('access_token')
       axios({
-        url: `/cart/${id}`,
+        url: `/cart/${id}/quantity/inc`,
         method: 'PATCH',
         headers: { access_token: token }
       })
@@ -135,12 +171,46 @@ export default new Vuex.Store({
     decQty (context, id) {
       const token = localStorage.getItem('access_token')
       axios({
-        url: `/cart/${id}`,
-        method: 'PUT',
+        url: `/cart/${id}/quantity/dec`,
+        method: 'PATCH',
         headers: { access_token: token }
       })
         .then(({ data }) => {
           context.dispatch('fetchCart')
+        })
+        .catch(err => {
+          console.log(err.response.data)
+        })
+    },
+    checkoutCart (context) {
+      const token = localStorage.getItem('access_token')
+      axios({
+        url: '/cart/checkouts',
+        method: 'PATCH',
+        headers: { access_token: token }
+      })
+        .then(({ data }) => {
+          context.dispatch('fetchCart')
+          Swal.fire({
+            icon: 'success',
+            title: 'Checkout success',
+            showConfirmButton: false,
+            timer: 2000
+          })
+        })
+        .catch(err => {
+          console.log(err.response.data)
+        })
+    },
+    fetchHistory (context) {
+      const token = localStorage.getItem('access_token')
+      axios({
+        url: '/history',
+        method: 'GET',
+        headers: { access_token: token }
+      })
+        .then(({ data }) => {
+          context.commit('SET_HISTORY', data)
         })
         .catch(err => {
           console.log(err.response.data)

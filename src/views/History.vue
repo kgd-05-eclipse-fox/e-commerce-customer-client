@@ -1,22 +1,20 @@
 <template>
   <div>
     <Navbar></Navbar>
-    <Products></Products>
+    <HistoryTable></HistoryTable>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
+import HistoryTable from '@/components/HistoryTable.vue'
 import Navbar from '@/components/Navbar.vue'
-import Products from '@/components/Products.vue'
-
 export default {
-  name: 'Home',
+  name: 'History',
   components: {
-    Navbar, Products
+    HistoryTable, Navbar
   },
   beforeCreate () {
-    this.$store.dispatch('fetchProducts')
+    this.$store.dispatch('fetchHistory')
     const token = localStorage.getItem('access_token')
     if (token) {
       this.$store.commit('SET_LOGIN_STATUS', true)
@@ -26,3 +24,7 @@ export default {
   }
 }
 </script>
+
+<style>
+
+</style>

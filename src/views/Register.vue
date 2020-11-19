@@ -16,7 +16,11 @@
                         <input type="password" class="form-control" id="exampleInputPassword1" v-model="password">
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+                </form><br>
+                <p>
+                    Already have an account ?
+                    <a href="#" @click.prevent="toLoginForm">Login</a>
+                  </p>
             </div>
         </div>
   </div>
@@ -38,6 +42,11 @@ export default {
         password: this.password
       }
       this.$store.dispatch('signUp', payload)
+    },
+    toLoginForm () {
+      this.$router.push({
+        name: 'Login'
+      })
     }
   }
 }
