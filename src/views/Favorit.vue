@@ -6,21 +6,20 @@
     <div class="container">
         <div class=" d-flex justify-content-center mb-4 posisiBasket">
             <h1  style="font-family: 'Pacifico', cursive;" class=" text-light">Your Favorite Product</h1>
-            {{ getDataFavorit }}
         </div>
         <div class="row d-flex- justify-content-center columFavorit">
-            <div class=" col-8 align-items-center text-light d-flex row" style="background-color: rgb(0, 0, 0, 0.5);">
+            <div v-for="el in getDataFavorit" :key="el.id" class=" col-8 align-items-center text-light d-flex row" style="background-color: rgb(0, 0, 0, 0.5);">
                 <div class=" d-flex mt-3 col-1">
-                    <p class="p-0">1</p>
+                    <p class="p-0">{{ el.id }}</p>
                 </div>
                 <div class=" d-flex col-4">
-                    <p>Name: Makan Malam Nikmat</p>
+                    <p>Name: {{ el.Product.name }}</p>
                 </div>
                 <div class=" d-flex col-5 imgFavorit">
-                    <img class="m-2" src="https://eigeradventure.com/media/catalog/product/cache/4fcc276cc458f0c20c7cb141f7d9fdf7/9/1/910003343002-1_2.jpg" alt="">
+                    <img class="m-2" :src="el.Product.image_url" alt="">
                 </div>
                 <div class=" d-flex col-2">
-                    <button class=" btn btn-danger btn-group mb-2">Delete</button>
+                    <button @click.prevent="deleteFavorit(el.id)" class=" btn btn-danger btn-group mb-2">Delete</button>
                 </div>
                 <hr>
             </div>
@@ -35,11 +34,50 @@
 <script>
 import NavBar from '@/components/NavBar.vue'
 import Footer from '@/components/Footer.vue'
+import Swal from 'sweetalert2'
 
 export default {
   name: 'Favorit',
   data () {
     return {}
+  },
+  methods: {
+    deleteFavorit (id) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$store.dispatch('deleteDataFavorit', id)
+            .then(({ data }) => {
+              this.$store.dispatch('getAllDataFavorit')
+              this.$router.push({ name: 'Favorit' })
+              Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Your Favorite Product has been Delete',
+                showConfirmButton: false,
+                timer: 1500
+              })
+            })
+            .catch(err => {
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops, Sorry...',
+                text: 'Something went wrong, Internal Server ERROR',
+                showConfirmButton: false,
+                timer: 1500
+              })
+              console.log(err)
+            })
+        }
+      })
+    }
   },
   computed: {
     getDataFavorit () {

@@ -96,16 +96,19 @@ export default {
 
 /* The about link: 20px from the top with a green background */
 #about {
+  position: sticky;
   top: 20px;
   background-color: #FCDA4F;
 }
 
 #blog {
+  position: sticky;
   top: 100px;
   background-color: #F94857; /* Blue */
 }
 
 #history{
+  position: sticky;
   top: 180px;
   background-color: #1888FB;
 }

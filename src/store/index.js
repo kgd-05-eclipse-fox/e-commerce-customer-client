@@ -44,7 +44,7 @@ export default new Vuex.Store({
     getALlDataBanner (context) {
       const accesstoken = localStorage.getItem('access_token')
       axios
-        .get('/banner', ({ headers: { access_token: accesstoken } }))
+        .get('/banners', ({ headers: { access_token: accesstoken } }))
         .then(({ data }) => {
           context.commit('setAllDataBanner', data)
         })
@@ -53,7 +53,7 @@ export default new Vuex.Store({
     getAllDataProduct (context) {
       const accesstoken = localStorage.getItem('access_token')
       axios
-        .get('/product', ({ headers: { access_token: accesstoken } }))
+        .get('/products', ({ headers: { access_token: accesstoken } }))
         .then(({ data }) => {
           console.log(data)
           context.commit('setDataAllProduct', data)
@@ -65,12 +65,12 @@ export default new Vuex.Store({
     },
     postProductToBasket (context, ProductId) {
       const accesstoken = localStorage.getItem('access_token')
-      return axios.post('/userproduct', ProductId, ({ headers: { access_token: accesstoken } }))
+      return axios.post('/userproducts', ProductId, ({ headers: { access_token: accesstoken } }))
     },
     getAllDataBasket (context) {
       const accesstoken = localStorage.getItem('access_token')
       axios
-        .get('/userproduct', ({ headers: { access_token: accesstoken } }))
+        .get('/userproducts', ({ headers: { access_token: accesstoken } }))
         .then(({ data }) => {
           console.log(data)
           context.commit('setDataAllBasket', data)
@@ -79,16 +79,16 @@ export default new Vuex.Store({
     },
     deleteUserProduct (context, id) {
       const accesstoken = localStorage.getItem('access_token')
-      return axios.delete(`/userproduct/${id}`, ({ headers: { access_token: accesstoken } }))
+      return axios.delete(`/userproducts/${id}`, ({ headers: { access_token: accesstoken } }))
     },
     updateQuantity (context, dataUpdate) {
       const accesstoken = localStorage.getItem('access_token')
-      return axios.patch(`/userproduct/${dataUpdate.id}`, dataUpdate, ({ headers: { access_token: accesstoken } }))
+      return axios.patch(`/userproducts/${dataUpdate.id}`, dataUpdate, ({ headers: { access_token: accesstoken } }))
     },
     getTotalPrice (context) {
       const accesstoken = localStorage.getItem('access_token')
       axios
-        .get('/userproduct/total', ({ headers: { access_token: accesstoken } }))
+        .get('/userproducts/total', ({ headers: { access_token: accesstoken } }))
         .then(({ data }) => {
           context.commit('setTotalBasket', data)
         })
@@ -96,12 +96,12 @@ export default new Vuex.Store({
     },
     checkOutDataBasket (context, total) {
       const accesstoken = localStorage.getItem('access_token')
-      return axios.post('/chechout', total, ({ headers: { access_token: accesstoken } }))
+      return axios.post('/checkouts', total, ({ headers: { access_token: accesstoken } }))
     },
     getAllDataCheckOut (context) {
       const accesstoken = localStorage.getItem('access_token')
       axios
-        .get('/chechout', ({ headers: { access_token: accesstoken } }))
+        .get('/checkouts', ({ headers: { access_token: accesstoken } }))
         .then(({ data }) => {
           context.commit('setDataCheckOut', data)
         })
@@ -109,21 +109,25 @@ export default new Vuex.Store({
     },
     deleteHistory (context, id) {
       const accesstoken = localStorage.getItem('access_token')
-      return axios.delete(`/chechout/${id}`, ({ headers: { access_token: accesstoken } }))
+      return axios.delete(`/checkouts/${id}`, ({ headers: { access_token: accesstoken } }))
     },
     postProductToFavorit (context, ProductId) {
       const accesstoken = localStorage.getItem('access_token')
-      return axios.post('/favorit', ProductId, ({ headers: { access_token: accesstoken } }))
+      return axios.post('/favorites', ProductId, ({ headers: { access_token: accesstoken } }))
     },
     getAllDataFavorit (context) {
       const accesstoken = localStorage.getItem('access_token')
       axios
-        .get('/favorit', ({ headers: { access_token: accesstoken } }))
+        .get('/favorites', ({ headers: { access_token: accesstoken } }))
         .then(({ data }) => {
           console.log('masuk then store')
           context.commit('setDataFavorit', data)
         })
         .catch(err => console.log(err))
+    },
+    deleteDataFavorit (context, id) {
+      const accesstoken = localStorage.getItem('access_token')
+      return axios.delete(`/favorites/${id}`, ({ headers: { access_token: accesstoken } }))
     }
   },
   modules: {
