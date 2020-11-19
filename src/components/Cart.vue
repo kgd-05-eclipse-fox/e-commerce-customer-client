@@ -118,6 +118,7 @@ export default {
               toast.addEventListener('mouseleave', Swal.resumeTimer)
             }
           })
+
           Toast.fire({
             icon: 'success',
             title: 'Checkout successfully'
@@ -151,24 +152,31 @@ export default {
   margin-left: 220px;
   width: 100%;
 }
+
 #item-amount {
   margin: 0 10px;
 }
+
 .action {
   text-decoration: none;
-  color: red;
+  color: black;
 }
+
 .action:hover {
   color: #ff9966;
   transition: 300ms;
 }
+
 .uk-table-expand {
   text-align: center;
 }
+
 .uk-button {
+  background-color: black;
   color: white;
   font-family: 'Alfa Slab One', cursive;
 }
+
 .uk-button:hover {
   background-color: #ff9966;
   color: black;

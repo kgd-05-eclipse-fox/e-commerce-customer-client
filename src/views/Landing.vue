@@ -117,6 +117,11 @@ export default {
           })
         })
         .catch(err => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Wrong Email/Password!'
+          })
           console.log(err)
         })
     },
@@ -186,12 +191,14 @@ form {
 }
 
 .uk-button-default {
-  color: black;
+  background-color: black;
+  color: white;
 }
 
 .uk-button-default:hover {
   transition: 300ms;
-  background-color: green;
+  background-color: #ff9966;
+  color: black;
 }
 
 .uk-card {

@@ -1,8 +1,8 @@
 <template>
   <div class="home">
     <div class="main-flex">
-      <div class="col-2 sidenav uk-card-default uk-animation-slide-left">
-        <div class="content-nav uk-card-default">
+      <div class="col-2 sidenav uk-card-secondary uk-animation-slide-left">
+        <div class="content-nav uk-card-secondary">
           <div class="category-title">
             <h6>CATEGORIES</h6>
           </div>
@@ -78,7 +78,7 @@ export default {
 
 <style scoped>
 #card-button-text {
-  color: black !important;
+  color: white !important;
 }
 
 .cart-button {
@@ -102,17 +102,17 @@ export default {
 }
 
 .uk-button {
-  color:black;
+  color: black;
 }
 
 .uk-button:hover {
-  background-color:green;
+  background-color: #ff9966;
   transition: 300ms;
 }
 
 .content-nav h6 {
   font-family: 'Alfa Slab One', cursive;
-  color: black;
+  color: white;
 }
 
 .main-flex {

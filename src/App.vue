@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="uk-background">
     <div id="nav" class="uk-background-default uk-light uk-panel">
-      <router-link class="nav-links" to="/">Hack-Commerce</router-link>
+      <router-link class="nav-links" to="/"><img class="logob" alt="Hack logo" src="./assets/neuestLogo.png" width="200px"><br></router-link>
       <router-link v-if="!logged" class="nav-links" to="/landing">Login</router-link>
       <a href="#" v-else-if="logged" class="nav-links logout" @click.prevent="logout">Logout</a>
     </div>
@@ -72,6 +72,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  color: #2c3e50;
 }
 
 #nav {
@@ -84,17 +85,17 @@ export default {
 
 #nav a {
   text-decoration: none;
-  color: green;
+  color:black;
   font-size: 50px;
   margin: 0px 20px;
 }
 
 #nav a:hover {
-  color: green;
+  color: #ff9966;
   transition: 300ms;
 }
 
 .logout:hover {
-  color: darkolivegreen !important;
+  color: darkgoldenrod !important;
 }
 </style>
