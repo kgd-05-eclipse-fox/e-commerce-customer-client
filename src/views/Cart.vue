@@ -50,7 +50,8 @@ export default {
                 this.$store.dispatch('getCart')
                 Toast.fire({
                   icon: 'success',
-                  title: data.msg
+                  title: data.msg,
+                  text: 'Check your email or your history page for a review'
                 })
               })
               .catch(err => {
